@@ -278,9 +278,13 @@ python scripts/train.py
 python scripts/predict.py
 ```
 
-Training writes `results/churn_pipeline.pkl`, `results/threshold.json`, `results/results.md`, and `results/plots/precision_recall_curve.png`. Prediction writes `results/predictions.csv`.
+## Output
+- `results/results.md`: Final report with all results and business translation.
+- `results/churn_pipeline.pkl`: Saved scikit-learn Pipeline for inference.
+- `results/threshold.json`: Frozen decision threshold for inference.
+- `results/plots/precision_recall_curve.png`: Precision-recall curve on out-of-fold training predictions.
+- `data/new_customers.csv`: Sample of 5 new customers for prediction.
 """
-    Path("README.md").write_text(readme, encoding="utf-8")
 
 
 def main():
