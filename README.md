@@ -21,9 +21,9 @@ All scores use 5-fold stratified cross-validation on the training split only.
 
 | model               |   recall_mean |   recall_std |   precision_mean |   precision_std |   f1_mean |   f1_std |   roc_auc_mean |   roc_auc_std |
 |:--------------------|--------------:|-------------:|-----------------:|----------------:|----------:|---------:|---------------:|--------------:|
-| Gradient Boosting   |         0.522 |        0.025 |            0.663 |           0.035 |     0.584 |    0.026 |          0.848 |         0.011 |
-| Logistic Regression |         0.797 |        0.035 |            0.519 |           0.017 |     0.628 |    0.021 |          0.846 |         0.011 |
-| Random Forest       |         0.672 |        0.031 |            0.582 |           0.018 |     0.624 |    0.022 |          0.841 |         0.009 |
+| Gradient Boosting   |         0.522 |        0.026 |            0.66  |           0.036 |     0.583 |    0.027 |          0.847 |         0.012 |
+| Logistic Regression |         0.796 |        0.035 |            0.519 |           0.016 |     0.628 |    0.02  |          0.846 |         0.011 |
+| Random Forest       |         0.672 |        0.032 |            0.585 |           0.019 |     0.625 |    0.023 |          0.842 |         0.008 |
 
 ## Baselines
 
@@ -40,23 +40,23 @@ Best model: **Logistic Regression**
 
 Logistic Regression was selected for tuning because it had the strongest churn recall in cross-validation while maintaining useful precision. That matches the business objective: missing a true churner is roughly 5x more costly than making an extra retention call.
 
-Tuned parameters: `{'model__C': 0.1, 'model__solver': 'liblinear'}`
+Tuned parameters: `{'model__C': 0.05, 'model__solver': 'liblinear'}`
 
-The decision threshold was chosen from out-of-fold training probabilities, selecting the highest precision threshold with recall >= 0.80. The frozen threshold is **0.491**.
+The decision threshold was chosen from out-of-fold training probabilities, selecting the highest precision threshold with recall >= 0.80. The frozen threshold is **0.490**.
 
 ## Final Held-Out Test Results
 
-- Recall: **0.794**
-- Precision: **0.495**
+- Recall: **0.791**
+- Precision: **0.497**
 - F1: **0.610**
-- ROC-AUC: **0.842**
+- ROC-AUC: **0.841**
 
 Confusion matrix:
 
 |               |   Pred No Churn |   Pred Churn |
 |:--------------|----------------:|-------------:|
-| True No Churn |             732 |          303 |
-| True Churn    |              77 |          297 |
+| True No Churn |             735 |          300 |
+| True Churn    |              78 |          296 |
 
 ## Run
 

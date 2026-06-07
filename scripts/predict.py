@@ -20,6 +20,10 @@ def main():
     threshold = json.loads(THRESHOLD_PATH.read_text(encoding="utf-8"))["threshold"]
 
     df = pd.read_csv(INPUT_PATH)
+
+    if "TotalCharges" in df.columns:
+        df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
+
     customer_ids = df["customerID"].copy()
     X = df.drop(columns=["customerID"], errors="ignore")
     X = X.drop(columns=["Churn"], errors="ignore")
@@ -36,6 +40,8 @@ def main():
     )
     OUTPUT_PATH.parent.mkdir(exist_ok=True)
     output.to_csv(OUTPUT_PATH, index=False)
+
+    print("Predictions generated successfully:")
     print(output.to_string(index=False))
 
 

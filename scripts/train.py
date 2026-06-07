@@ -33,6 +33,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from preprocessing import ChurnFeatureEngineer
+from sklearn.compose import make_column_selector
 
 
 RANDOM_STATE = 42
@@ -87,8 +88,8 @@ def make_preprocessor() -> ColumnTransformer:
     )
     return ColumnTransformer(
         [
-            ("num", num_pipe, NUM_COLS),
-            ("cat", cat_pipe, CAT_COLS),
+            ("num", num_pipe, make_column_selector(dtype_include=[np.number])),
+            ("cat", cat_pipe, make_column_selector(dtype_include=[object, "category"])),
         ],
         remainder="drop",
         verbose_feature_names_out=False,
@@ -288,6 +289,9 @@ def main():
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(DATA_PATH)
+
+    df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
+
     make_new_customers(df)
 
     y = df["Churn"].map({"No": 0, "Yes": 1})
